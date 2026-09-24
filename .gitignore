@@ -1,0 +1,51 @@
+# Compilación y archivos generados (Maven)
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.rar
+
+# Maven Wrapper JAR (opcional, si no usas el wrapper compilado)
+.mvn/wrapper/maven-wrapper.jar
+
+# IDEs - NetBeans
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+# IDEs - IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# IDEs - Eclipse / Spring Tool Suite (STS)
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+
+# IDEs - VS Code
+.vscode/
+
+# Logs y archivos temporales del SO
+*.log
+*.tmp
+*.bak
+*.swp
+.DS_Store
+Thumbs.db
+
+
+# Archivos de configuración con credenciales o entornos locales
+src/main/resources/application.properties
+src/main/resources/application-*.properties
