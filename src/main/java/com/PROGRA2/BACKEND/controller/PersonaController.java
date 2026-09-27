@@ -36,5 +36,7 @@ public class PersonaController {
         
         //devuelve todo o devuelve nada
         return personaRepository.findAll();
+        
+        //
     }
 }
