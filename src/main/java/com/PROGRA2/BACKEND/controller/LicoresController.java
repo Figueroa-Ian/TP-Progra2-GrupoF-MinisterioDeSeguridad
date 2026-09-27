@@ -1,4 +1,3 @@
-
 package com.PROGRA2.BACKEND.controller;
 
 import com.PROGRA2.BACKEND.models.Licores;
@@ -29,7 +28,7 @@ public class LicoresController {
     // con RequestParam podemos asignar valores a la URL para poder consultar por un campo 
     // en especifico (ID) guardando el valor retornado en un string "tipo"
     // ej: //localhost:8080/buscarlicores?tipo=cerveza
-    public List<Licores> buscarLicoreses(@RequestParam(name = "tipo", required = false) String tipo) {
+    public List<Licores> buscarLicores(@RequestParam(name = "tipo", required = false) String tipo) {
 
         // si NO es NULL Y NO esta VACIO
         // trim .. junta todo eliminando los espacios
