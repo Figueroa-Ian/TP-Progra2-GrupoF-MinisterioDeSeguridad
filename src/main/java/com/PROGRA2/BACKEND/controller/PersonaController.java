@@ -1,17 +1,19 @@
 package com.PROGRA2.BACKEND.controller;
 
 import com.PROGRA2.BACKEND.models.Persona;
+import com.PROGRA2.BACKEND.models.Rol;
 import com.PROGRA2.BACKEND.repository.PersonaRepository;
 import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class PersonaController {
-     private final PersonaRepository personaRepository;
+    private final PersonaRepository personaRepository;
 
     public PersonaController(PersonaRepository personaRepository) {
         this.personaRepository = personaRepository;
@@ -37,5 +39,18 @@ public class PersonaController {
         return personaRepository.findAll();
         
         //
+    }
+    
+    //Crear a traves de un formulario HTML..
+    //Hace un INSERT a la tabla y crea el objeto en la tabla
+    @PostMapping("/personas/crear")
+    public Persona crearPersonasConParams(@RequestParam String dni,@RequestParam String nombre, @RequestParam String apellido, @RequestParam String direccion, @RequestParam Rol rol) {
+        Persona persona = new Persona();
+        persona.setDni(dni);
+        persona.setNombre(nombre);
+        persona.setApellido(apellido);
+        persona.setDireccion(direccion);
+        persona.setRol(rol);
+        return personaRepository.save(persona);
     }
 }
