@@ -17,7 +17,6 @@ public class PersonaController {
         this.personaRepository = personaRepository;
     }
     
-    
     //toma la ruta que le asignemos
     @GetMapping("/buscarpersona")
     // con RequestParam podemos asignar valores a la URL para poder consultar por un campo 
