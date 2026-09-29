@@ -8,8 +8,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter //genera automat. por el LOMBOK.
@@ -25,6 +27,10 @@ public class Persona {
     private String nombre;
     private String apellido;
     private String direccion;
+    // Nuevo campo: Fecha de Nacimiento
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Column(name = "fecha_nacimiento")
+    private LocalDate fechaNacimiento;
     
     // se le agregan estas anotaciones porque JPA interpreta el ENUM como int en ves de String
     @Enumerated(EnumType.STRING)
@@ -34,11 +40,13 @@ public class Persona {
     public Persona() {
     }
 
-    public Persona(String dni, String nombre, String apellido, String direccion, Rol rol) {
+    public Persona(Integer id, String dni, String nombre, String apellido, String direccion, LocalDate fechaNacimiento, Rol rol) {
+        this.id = id;
         this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;
+        this.fechaNacimiento = fechaNacimiento;
         this.rol = rol;
     }
 }

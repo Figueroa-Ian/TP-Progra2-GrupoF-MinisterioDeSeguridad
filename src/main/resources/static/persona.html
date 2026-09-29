@@ -1,47 +1,105 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>FORMULARIO PERSONA</title>
+        <title>FORMULARIO PERSONAS</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .campo-especifico {
+                display: none;
+                margin-top: 10px;
+                padding: 10px;
+                border: 1px dashed #ccc;
+            }
+        </style>
     </head>
     <body>
         <div>
-            <h2>Formulario para crear Personas</h2>
+            <h2>Formulario para Crear Persona</h2>
 
             <form action="http://localhost:8080/personas/crear" method="POST">
+                <!-- Campos Generales de Persona -->
                 <div>
                     <label for="dni">DNI:</label><br>
-                    <input type="text" id="dni" name="dni" placeholder="Ej: 40111222" required>
+                    <input type="text" id="dni" name="dni" required>
                 </div>
                 <br>
                 <div>
                     <label for="nombre">Nombre:</label><br>
-                    <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan" required>
+                    <input type="text" id="nombre" name="nombre" required>
                 </div>
                 <br>
                 <div>
                     <label for="apellido">Apellido:</label><br>
-                    <input type="text" id="apellido" name="apellido" placeholder="Ej: Pérez" required>
+                    <input type="text" id="apellido" name="apellido" required>
                 </div>
                 <br>
                 <div>
                     <label for="direccion">Dirección:</label><br>
-                    <input type="text" id="direccion" name="direccion" placeholder="Ej: Av. Corrientes 123">
+                    <input type="text" id="direccion" name="direccion">
+                </div>
+                <br>
+                <div>
+                    <label for="fechaNacimiento">Fecha de Nacimiento:</label><br>
+                    <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
                 </div>
                 <br>
                 <div>
                     <label for="rol">Rol:</label><br>
-                    <select id="rol" name="rol" required>
+                    <select id="rol" name="rol" required onchange="actualizarFormulario()">
                         <option value="" disabled selected>-- Seleccione un rol --</option>
-                        <option value="VIGILANTE">VIGILANTE</option>
-                        <option value="DELINCUENTE">DELINCUENTE</option>
                         <option value="JUEZ">JUEZ</option>
+                        <option value="DELINCUENTE">DELINCUENTE</option>
+                        <option value="VIGILANTE">VIGILANTE</option>
                     </select>
                 </div>
-                <br>
-                <button type="submit">Guardar Persona</button>
+
+                <!-- Campos Específicos para JUEZ -->
+                <div id="seccion-juez" class="campo-especifico">
+                    <h3>Datos de Juez</h3>
+                    <label for="aniosAntiguedad">Años de Antigüedad:</label><br>
+                    <input type="number" id="aniosAntiguedad" name="aniosAntiguedad" min="0">
+                </div>
+
+                <!-- Campos Específicos para DELINCUENTE -->
+                <div id="seccion-delincuente" class="campo-especifico">
+                    <h3>Datos de Delincuente</h3>
+                    <label for="codigoBanda">Código de Banda:</label><br>
+                    <input type="number" id="codigoBanda" name="codigoBanda">
+                </div>
+
+                <!-- Campos Específicos para VIGILANTE -->
+                <div id="seccion-vigilante" class="campo-especifico">
+                    <h3>Datos de Vigilante</h3>
+                    <label for="legajo">Legajo:</label><br>
+                    <input type="number" id="legajo" name="legajo"><br><br>
+                    <label for="disponibilidad">Disponibilidad para trabajar:</label>
+                    <input type="checkbox" id="disponibilidad" name="disponibilidad" value="true">
+                </div>
+
+                <br><br>
+                <button type="submit">Guardar</button>
             </form>
         </div>
+
+        <script>
+            function actualizarFormulario() {
+                var rol = document.getElementById("rol").value;
+
+                // Ocultar todas las secciones primero
+                document.getElementById("seccion-juez").style.display = "none";
+                document.getElementById("seccion-delincuente").style.display = "none";
+                document.getElementById("seccion-vigilante").style.display = "none";
+
+                // Mostrar la sección correspondiente
+                if (rol === "JUEZ") {
+                    document.getElementById("seccion-juez").style.display = "block";
+                } else if (rol === "DELINCUENTE") {
+                    document.getElementById("seccion-delincuente").style.display = "block";
+                } else if (rol === "VIGILANTE") {
+                    document.getElementById("seccion-vigilante").style.display = "block";
+                }
+            }
+        </script>
     </body>
 </html>
