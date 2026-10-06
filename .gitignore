@@ -1,4 +1,4 @@
-# Compilación y archivos generados (Maven)
+Compilación y archivos generados (Maven)
 target/
 *.class
 *.jar
@@ -6,10 +6,10 @@ target/
 *.ear
 *.rar
 
-# Maven Wrapper JAR (opcional, si no usas el wrapper compilado)
+Maven Wrapper JAR (opcional, si no usas el wrapper compilado)
 .mvn/wrapper/maven-wrapper.jar
 
-# IDEs - NetBeans
+IDEs - NetBeans
 /nbproject/private/
 /build/
 /nbbuild/
@@ -18,14 +18,14 @@ target/
 /.nb-gradle/
 build/
 
-# IDEs - IntelliJ IDEA
+IDEs - IntelliJ IDEA
 .idea/
 *.iws
 *.iml
 *.ipr
 out/
 
-# IDEs - Eclipse / Spring Tool Suite (STS)
+IDEs - Eclipse / Spring Tool Suite (STS)
 .apt_generated
 .classpath
 .factorypath
@@ -34,18 +34,18 @@ out/
 .springBeans
 .sts4-cache
 
-# IDEs - VS Code
+IDEs - VS Code
 .vscode/
 
-# Logs y archivos temporales del SO
+Logs y archivos temporales del SO
 *.log
 *.tmp
 *.bak
-*.swp
+.swp
 .DS_Store
 Thumbs.db
 
 
-# Archivos de configuración con credenciales o entornos locales
+Archivos de configuración con credenciales o entornos locales
 src/main/resources/application.properties
-src/main/resources/application-*.properties
+src/main/resources/application-.properties
