@@ -1,4 +1,3 @@
-
 package com.PROGRA2.BACKEND.models;
 
 import jakarta.persistence.*;
@@ -20,18 +19,23 @@ public class Vigilante extends Persona {
     private String legajo;
 
     @Column(nullable = false)
-    private int edad;
-    
+    private int edad;    
     private boolean disponibleTrabajar;
     
     public Vigilante() {
     }
 
-    public Vigilante(Integer id, String dni, String nombre, String apellido, String direccion,LocalDate fechaNacimiento, String legajo, int edad, boolean disponibleTrabajar) {
+    public Vigilante(Integer id, String dni, String nombre, String apellido, String direccion, LocalDate fechaNacimiento, String legajo, int edad, boolean disponibleTrabajar) {
         super(id, dni, nombre, apellido, direccion, fechaNacimiento, Rol.VIGILANTE);
         this.legajo = legajo;
         this.edad = edad;
         this.disponibleTrabajar = disponibleTrabajar;
     }
 //se sumo disponibleTrabajar boolean
+
+    public Vigilante(String dni, String nombre, String apellido, String direccion, LocalDate fechaNacimiento, String legajo, int edad) {
+        super(dni, nombre, apellido, direccion, fechaNacimiento, Rol.VIGILANTE);
+        this.legajo = legajo;
+        this.edad = edad;
+    }
 }

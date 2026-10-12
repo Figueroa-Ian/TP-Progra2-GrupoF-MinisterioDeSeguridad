@@ -22,7 +22,7 @@ public class PersonaController {
     }
     
     //toma la ruta que le asignemos
-    @GetMapping("/buscarpersona")
+    @GetMapping("/buscar/personas")
     // con RequestParam podemos asignar valores a la URL para poder consultar por un campo 
     // en especifico (ID) guardando el valor retornado en un string "id"
     // ej: //localhost:8080/buscarpersona?nombre=Lucas
@@ -40,11 +40,11 @@ public class PersonaController {
         //devuelve todo o devuelve nada
         return personaRepository.findAll();
     }
-
+    
     //Crear a traves de un formulario HTML..
     //Hace un INSERT a la tabla y crea el objeto en la tabla
     // localhost:8080/persona.html 
-    @PostMapping("/crear")
+    @PostMapping("/crear/persona")
     public Persona crearPersona(
             @RequestParam String dni,
             @RequestParam String nombre,
@@ -58,7 +58,6 @@ public class PersonaController {
             @RequestParam(required = false, defaultValue = "false") Boolean disponibilidad
     ) {
         Persona persona;
-        
         /*
         switch (rol) {
             case JUEZ:

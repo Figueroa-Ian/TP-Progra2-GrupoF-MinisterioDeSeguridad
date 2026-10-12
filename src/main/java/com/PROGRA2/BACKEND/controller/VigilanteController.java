@@ -1,4 +1,3 @@
-
 package com.PROGRA2.BACKEND.controller;
 
 import com.PROGRA2.BACKEND.models.Vigilante;
