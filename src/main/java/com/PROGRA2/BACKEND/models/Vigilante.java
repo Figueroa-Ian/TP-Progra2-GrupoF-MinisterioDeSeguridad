@@ -1,4 +1,3 @@
-/*
 package com.PROGRA2.BACKEND.models;
 
 import jakarta.persistence.*;
@@ -32,4 +31,3 @@ public class Vigilante extends Persona {
     }
 
 }
-*/

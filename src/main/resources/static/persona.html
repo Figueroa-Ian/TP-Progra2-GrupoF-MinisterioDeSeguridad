@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>FORMULARIO PERSONAS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .campo-especifico {
+                display: none;
+                margin-top: 10px;
+                padding: 10px;
+                border: 1px dashed #ccc;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <h2>Formulario para Crear Persona</h2>
+
+            <form action="http://localhost:8080/personas/crear" method="POST">
+                <!-- Campos Generales de Persona -->
+                <div>
+                    <label for="dni">DNI:</label><br>
+                    <input type="text" id="dni" name="dni" required>
+                </div>
+                <br>
+                <div>
+                    <label for="nombre">Nombre:</label><br>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <br>
+                <div>
+                    <label for="apellido">Apellido:</label><br>
+                    <input type="text" id="apellido" name="apellido" required>
+                </div>
+                <br>
+                <div>
+                    <label for="direccion">Dirección:</label><br>
+                    <input type="text" id="direccion" name="direccion">
+                </div>
+                <br>
+                <div>
+                    <label for="rol">Rol:</label><br>
+                    <select id="rol" name="rol" required onchange="actualizarFormulario()">
+                        <option value="" disabled selected>-- Seleccione un rol --</option>
+                        <option value="JUEZ">JUEZ</option>
+                        <option value="DELINCUENTE">DELINCUENTE</option>
+                        <option value="VIGILANTE">VIGILANTE</option>
+                        <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+                        <option value="INVESTIGADOR">INVESTIGADOR</option>
+                    </select>
+                </div>
+                <br><br>
+                <button type="submit">Guardar</button>
+            </form>
+        </div>
+
+        <script>
+            function actualizarFormulario() {
+                var rol = document.getElementById("rol").value;
+
+                // Ocultar todas las secciones primero
+                document.getElementById("seccion-juez").style.display = "none";
+                document.getElementById("seccion-delincuente").style.display = "none";
+                document.getElementById("seccion-vigilante").style.display = "none";
+                document.getElementById("seccion-administrador").style.display = "none";
+                document.getElementById("seccion-investigador").style.display = "none";
+                
+            }
+        </script>
+    </body>
+</html>

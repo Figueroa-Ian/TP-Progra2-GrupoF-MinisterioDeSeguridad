@@ -1,10 +1,12 @@
 package com.PROGRA2.BACKEND.controller;
 
 import com.PROGRA2.BACKEND.models.Persona;
+import com.PROGRA2.BACKEND.models.Rol;
 import com.PROGRA2.BACKEND.repository.PersonaRepository;
 import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +21,7 @@ public class PersonaController {
     
     
     //toma la ruta que le asignemos
-    @GetMapping("/buscarpersona")
+    @GetMapping("/buscar/personas")
     // con RequestParam podemos asignar valores a la URL para poder consultar por un campo 
     // en especifico (ID) guardando el valor retornado en un string "id"
     // ej: //localhost:8080/buscarpersona?nombre=Lucas
@@ -36,5 +38,60 @@ public class PersonaController {
         
         //devuelve todo o devuelve nada
         return personaRepository.findAll();
+    }
+    //Crear a traves de un formulario HTML..
+    //Hace un INSERT a la tabla y crea el objeto en la tabla
+    @PostMapping("/crear/persona")
+    public Persona crearPersona(
+            @RequestParam String dni,
+            @RequestParam String nombre,
+            @RequestParam String apellido,
+            @RequestParam String direccion,
+            @RequestParam Rol rol       
+    ) {
+        Persona persona;
+      
+        /*
+        switch (rol) {
+            case JUEZ:
+                Juez juez = new Juez();
+                if (aniosAntiguedad != null) {
+                    juez.setAniosAntiguedad(aniosAntiguedad);
+                }
+                persona = juez;
+                break;
+
+            case DELINCUENTE:
+                Delincuente delincuente = new Delincuente();
+                if (codigoBanda != null) {
+                    delincuente.setCodigoBanda(codigoBanda);
+                }
+                persona = delincuente;
+                break;
+
+            case VIGILANTE:
+                Vigilante vigilante = new Vigilante();
+                if (legajo != null) {
+                    vigilante.setLegajo(legajo);
+                }
+                vigilante.setDisponibilidad(disponibilidad != null ? disponibilidad : false);
+                persona = vigilante;
+                break;
+
+            default:
+        */
+                persona = new Persona();
+                /*
+                break;
+        }*/
+                
+        // Datos comunes de Persona
+        persona.setDni(dni);
+        persona.setNombre(nombre);
+        persona.setApellido(apellido);
+        persona.setDireccion(direccion);
+        persona.setRol(rol);
+
+        return personaRepository.save(persona);
     }
 }
