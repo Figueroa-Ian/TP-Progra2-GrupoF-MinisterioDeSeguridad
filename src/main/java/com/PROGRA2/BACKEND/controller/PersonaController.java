@@ -39,8 +39,6 @@ public class PersonaController {
 
         //devuelve todo o devuelve nada
         return personaRepository.findAll();
-
-        //
     }
 
     //Crear a traves de un formulario HTML..
