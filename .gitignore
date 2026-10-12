@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 Compilación y archivos generados (Maven)
+=======
+# Compilación y archivos generados (Maven)
+>>>>>>> RamaModMili
 target/
 *.class
 *.jar
@@ -6,10 +10,17 @@ target/
 *.ear
 *.rar
 
+<<<<<<< HEAD
 Maven Wrapper JAR (opcional, si no usas el wrapper compilado)
 .mvn/wrapper/maven-wrapper.jar
 
 IDEs - NetBeans
+=======
+# Maven Wrapper JAR (opcional, si no usas el wrapper compilado)
+.mvn/wrapper/maven-wrapper.jar
+
+# IDEs - NetBeans
+>>>>>>> RamaModMili
 /nbproject/private/
 /build/
 /nbbuild/
@@ -18,14 +29,22 @@ IDEs - NetBeans
 /.nb-gradle/
 build/
 
+<<<<<<< HEAD
 IDEs - IntelliJ IDEA
+=======
+# IDEs - IntelliJ IDEA
+>>>>>>> RamaModMili
 .idea/
 *.iws
 *.iml
 *.ipr
 out/
 
+<<<<<<< HEAD
 IDEs - Eclipse / Spring Tool Suite (STS)
+=======
+# IDEs - Eclipse / Spring Tool Suite (STS)
+>>>>>>> RamaModMili
 .apt_generated
 .classpath
 .factorypath
@@ -34,6 +53,7 @@ IDEs - Eclipse / Spring Tool Suite (STS)
 .springBeans
 .sts4-cache
 
+<<<<<<< HEAD
 IDEs - VS Code
 .vscode/
 
@@ -42,10 +62,26 @@ Logs y archivos temporales del SO
 *.tmp
 *.bak
 .swp
+=======
+# IDEs - VS Code
+.vscode/
+
+# Logs y archivos temporales del SO
+*.log
+*.tmp
+*.bak
+*.swp
+>>>>>>> RamaModMili
 .DS_Store
 Thumbs.db
 
 
+<<<<<<< HEAD
 Archivos de configuración con credenciales o entornos locales
 src/main/resources/application.properties
 src/main/resources/application-.properties
+=======
+# Archivos de configuración con credenciales o entornos locales
+src/main/resources/application.properties
+src/main/resources/application-*.properties
+>>>>>>> RamaModMili

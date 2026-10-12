@@ -17,7 +17,7 @@ import lombok.Setter;
 @Setter //genera automat. por el LOMBOK.
 @Entity
 @Table(name = "personas") // le decimos que pertenece a esa tabla BDD
-@Inheritance(strategy = InheritanceType.JOINED)// para que pueda hacer la busqueda con joined
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Persona {
 
     @Id
