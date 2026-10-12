@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "*")
 public class PersonaController {
-
     private final PersonaRepository personaRepository;
 
     public PersonaController(PersonaRepository personaRepository) {
         this.personaRepository = personaRepository;
     }
-
+    
     //toma la ruta que le asignemos
     @GetMapping("/buscarpersona")
     // con RequestParam podemos asignar valores a la URL para poder consultar por un campo 

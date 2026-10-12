@@ -12,11 +12,14 @@ import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 
 @Getter
 @Setter //genera automat. por el LOMBOK.
 @Entity
 @Table(name = "personas") // le decimos que pertenece a esa tabla BDD
+@Inheritance(strategy = InheritanceType.JOINED)// para que pueda hacer la busqueda con joined
 public class Persona {
 
     @Id
