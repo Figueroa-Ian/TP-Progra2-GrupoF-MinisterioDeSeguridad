@@ -46,6 +46,7 @@ public class PersonaController {
 
     //Crear a traves de un formulario HTML..
     //Hace un INSERT a la tabla y crea el objeto en la tabla
+    // localhost:8080/persona.html 
     @PostMapping("/crear")
     public Persona crearPersona(
             @RequestParam String dni,
