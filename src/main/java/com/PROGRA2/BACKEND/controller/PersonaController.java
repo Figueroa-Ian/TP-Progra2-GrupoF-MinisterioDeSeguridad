@@ -33,7 +33,6 @@ public class PersonaController {
         if (nombre != null && !nombre.trim().isEmpty()) {
             return personaRepository.findByNombre(nombre.trim());
         }
-        
         //devuelve todo o devuelve nada
         return personaRepository.findAll();
     }

@@ -5,11 +5,11 @@ import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.PrimaryKeyJoinColumn;
-import lombok.Getter;
-import lombok.Setter;
+//import lombok.Getter;
+//import lombok.Setter;
 
-@Getter
-@Setter //genera automat. por el LOMBOK.
+//@Getter
+//@Setter //genera automat. por el LOMBOK.
 @Entity
 @Table(name = "vigilantes")
 @PrimaryKeyJoinColumn(name = "persona_id") // Se vincula con el id de Persona
@@ -32,5 +32,31 @@ public class Vigilante extends Persona {
         this.edad = edad;
         this.disponibleTrabajar = disponibleTrabajar;
     }
+    
 //se sumo disponibleTrabajar boolean
+
+    public void setLegajo(String legajo) {
+        this.legajo = legajo;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    public void setDisponibleTrabajar(boolean disponibleTrabajar) {
+        this.disponibleTrabajar = disponibleTrabajar;
+    }
+
+    public String getLegajo() {
+        return legajo;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public boolean isDisponibleTrabajar() {
+        return disponibleTrabajar;
+    }
+    
 }
