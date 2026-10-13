@@ -33,8 +33,8 @@ public class Vigilante extends Persona {
     }
 //se sumo disponibleTrabajar boolean
 
-    public Vigilante(String dni, String nombre, String apellido, String direccion, LocalDate fechaNacimiento, String legajo, int edad) {
-        super(dni, nombre, apellido, direccion, fechaNacimiento, Rol.VIGILANTE);
+    public Vigilante(Integer id, String dni, String nombre, String apellido, String direccion, LocalDate fechaNacimiento, String legajo, int edad) {
+        super(id, dni, nombre, apellido, direccion, fechaNacimiento, Rol.VIGILANTE);
         this.legajo = legajo;
         this.edad = edad;
     }

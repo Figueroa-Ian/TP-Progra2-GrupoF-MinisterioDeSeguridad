@@ -17,7 +17,7 @@
         <div>
             <h2>Formulario para Crear Persona</h2>
 
-            <form action="http://localhost:8080/personas/crear" method="POST">
+            <form action="http://localhost:8080/crear/persona" method="POST">
                 <!-- Campos Generales de Persona -->
                 <div>
                     <label for="dni">DNI:</label><br>
@@ -40,21 +40,17 @@
                 </div>
                 <br>
                 <div>
-<<<<<<< HEAD
                     <label for="fechaNacimiento">Fecha de Nacimiento:</label><br>
                     <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
                 </div>
                 <br>
                 <div>
-=======
->>>>>>> 43fe3322220687d2d023ca9c66d182c4ca4cf168
                     <label for="rol">Rol:</label><br>
                     <select id="rol" name="rol" required onchange="actualizarFormulario()">
                         <option value="" disabled selected>-- Seleccione un rol --</option>
                         <option value="JUEZ">JUEZ</option>
                         <option value="DELINCUENTE">DELINCUENTE</option>
                         <option value="VIGILANTE">VIGILANTE</option>
-<<<<<<< HEAD
                     </select>
                 </div>
 
@@ -80,13 +76,6 @@
                     <label for="disponibilidad">Disponibilidad para trabajar:</label>
                     <input type="checkbox" id="disponibilidad" name="disponibilidad" value="true">
                 </div>
-
-=======
-                        <option value="ADMINISTRADOR">ADMINISTRADOR</option>
-                        <option value="INVESTIGADOR">INVESTIGADOR</option>
-                    </select>
-                </div>
->>>>>>> 43fe3322220687d2d023ca9c66d182c4ca4cf168
                 <br><br>
                 <button type="submit">Guardar</button>
             </form>
@@ -100,8 +89,7 @@
                 document.getElementById("seccion-juez").style.display = "none";
                 document.getElementById("seccion-delincuente").style.display = "none";
                 document.getElementById("seccion-vigilante").style.display = "none";
-<<<<<<< HEAD
-
+                
                 // Mostrar la sección correspondiente
                 if (rol === "JUEZ") {
                     document.getElementById("seccion-juez").style.display = "block";
@@ -110,11 +98,6 @@
                 } else if (rol === "VIGILANTE") {
                     document.getElementById("seccion-vigilante").style.display = "block";
                 }
-=======
-                document.getElementById("seccion-administrador").style.display = "none";
-                document.getElementById("seccion-investigador").style.display = "none";
-                
->>>>>>> 43fe3322220687d2d023ca9c66d182c4ca4cf168
             }
         </script>
     </body>
