@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>TODO write content</div>
+        <h2>Formulario para crear Licor</h2>
+
+        <!-- El atributo action debe coincidir con la URL de Spring Boot -->
+        <!-- El atributo method DEBE ser POST -->
+        
+        <!-- Si quiero hacer pruebas con localhost.. cambiar a.. (borrar espacio); action="htt p://localhost:8080/licores/crear"-->
+        
+        <form  action="http://172.16.0.62:8080/licores/crear" method="POST">
+            <div>
+                <label for="tipo">Tipo:</label><br>
+                <input type="text" id="tipo" name="tipo" value="Vodka" required>
+            </div>
+            <br>
+            <div>
+                <label for="marca">Marca:</label><br>
+                <input type="text" id="marca" name="marca" value="Absolut" required>
+            </div>
+            <br>
+            <div>
+                <label for="foto">Foto (URL o nombre):</label><br>
+                <input type="text" id="foto" name="foto" value="vodka.jpg" required>
+            </div>
+            <br>
+            <button type="submit">Guardar Licor</button>
+        </form>
+    </body>
+</html>

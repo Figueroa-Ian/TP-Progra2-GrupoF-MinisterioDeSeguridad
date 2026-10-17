@@ -4,7 +4,9 @@ import com.PROGRA2.BACKEND.models.Persona;
 import com.PROGRA2.BACKEND.models.Rol;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface PersonaRepository extends JpaRepository<Persona, Integer> {
     
     //JPA utiliza el nombre del metodo para buscar por el campo de la tabla

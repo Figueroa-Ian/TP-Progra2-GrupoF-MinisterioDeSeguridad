@@ -1,10 +1,10 @@
-/*
 package com.PROGRA2.BACKEND.models;
 
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.PrimaryKeyJoinColumn;
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,17 +19,23 @@ public class Vigilante extends Persona {
     private String legajo;
 
     @Column(nullable = false)
-    private int edad;
-
+    private int edad;    
+    private boolean disponibleTrabajar;
+    
     public Vigilante() {
-        super();
     }
 
-    public Vigilante(String dni, String nombre, String apellido, String direccion, String legajo, int edad) {
-        super(dni, nombre, apellido, direccion, Rol.VIGILANTE);
+    public Vigilante(Integer id, String dni, String nombre, String apellido, String direccion, LocalDate fechaNacimiento, String legajo, int edad, boolean disponibleTrabajar) {
+        super(id, dni, nombre, apellido, direccion, fechaNacimiento, Rol.VIGILANTE);
+        this.legajo = legajo;
+        this.edad = edad;
+        this.disponibleTrabajar = disponibleTrabajar;
+    }
+//se sumo disponibleTrabajar boolean
+
+    public Vigilante(Integer id, String dni, String nombre, String apellido, String direccion, LocalDate fechaNacimiento, String legajo, int edad) {
+        super(id, dni, nombre, apellido, direccion, fechaNacimiento, Rol.VIGILANTE);
         this.legajo = legajo;
         this.edad = edad;
     }
-
 }
-*/

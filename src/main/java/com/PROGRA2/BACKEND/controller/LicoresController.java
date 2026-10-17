@@ -47,7 +47,9 @@ public class LicoresController {
         // El método save() ejecuta el INSERT en la base de datos
         return licorRepository.save(nuevoLicores);
     }
-
+    
+    //Crear a traves de un formulario HTML..
+    //Hace un INSERT a la tabla y crea el objeto en la tabla
     @PostMapping("/licores/crear")
     public Licores crearLicoresConParams(@RequestParam String tipo, @RequestParam String marca, @RequestParam String foto) {
         Licores licor = new Licores();
