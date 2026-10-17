@@ -7,6 +7,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +17,8 @@ import lombok.Setter;
 @Setter //genera automat. por el LOMBOK.
 @Entity
 @Table(name = "personas") // le decimos que pertenece a esa tabla BDD
+@Inheritance(strategy = InheritanceType.JOINED)
+
 public class Persona {
 
     @Id
