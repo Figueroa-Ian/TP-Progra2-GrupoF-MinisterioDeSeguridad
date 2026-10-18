@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
+//@Getter
 @Setter //genera automat. por el LOMBOK.
 @Entity
 @Table(name = "bandas")
@@ -16,7 +16,7 @@ public class Banda {
     @Id
     @Column(name = "numero_banda")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int numeroBanda;
+    private Integer numeroBanda;
     
     @Column(name = "numero_miembros")
     private int numeroMiembros = 0;
@@ -31,4 +31,17 @@ public class Banda {
         this.numeroMiembros = 0;
         this.nombreBanda = nombreBanda;
     }
+
+    public Integer getNumeroBanda() {
+        return numeroBanda;
+    }
+
+    public int getNumeroMiembros() {
+        return numeroMiembros;
+    }
+
+    public String getNombreBanda() {
+        return nombreBanda;
+    }
+    
 }
