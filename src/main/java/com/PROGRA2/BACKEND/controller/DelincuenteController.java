@@ -7,13 +7,13 @@ import com.PROGRA2.BACKEND.repository.BandaRepository;
 import com.PROGRA2.BACKEND.repository.DelincuenteRepository;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/delincuentes")
 
 public class DelincuenteController {
     
