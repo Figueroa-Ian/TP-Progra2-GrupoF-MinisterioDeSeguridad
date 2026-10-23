@@ -3,20 +3,28 @@ package com.PROGRA2.BACKEND.controller;
 import com.PROGRA2.BACKEND.models.Persona;
 import com.PROGRA2.BACKEND.models.Rol;
 import com.PROGRA2.BACKEND.repository.PersonaRepository;
+import com.PROGRA2.BACKEND.services.PersonaService;
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "*")
+@RequestMapping("/api")
+//@CrossOrigin(origins = "*")// Permite que cualquier origen (..localhost:*) consulte a tu API
 public class PersonaController {
     private final PersonaRepository personaRepository;
-
+    
+    @Autowired
+    private final PersonaService personaS = null;
+    
+    
     public PersonaController(PersonaRepository personaRepository) {
         this.personaRepository = personaRepository;
     }
@@ -103,7 +111,6 @@ public class PersonaController {
 
         return personaRepository.save(persona);
     }
-
     /*
     En lugar de recibir cada parámetro por separado con @RequestParam y llamar a los 
     setters uno por uno, Spring Boot te permite mapear todos los campos del formulario 
@@ -114,4 +121,15 @@ public class PersonaController {
     return personaRepository.save(persona);
     }
      */
+    
+    @GetMapping("/buscar/persona")
+    public ResponseEntity<List<Persona>> buscarPers(@RequestParam(name = "nombre", required = false) String nombre) {
+        if (nombre != null && !nombre.trim().isEmpty()) {
+            return ResponseEntity.ok(personaS.listarPersonas());
+        }
+
+        //devuelve todo o devuelve nada
+        return ResponseEntity.ok(personaS.listarPersonas());
+    }
 }
+
