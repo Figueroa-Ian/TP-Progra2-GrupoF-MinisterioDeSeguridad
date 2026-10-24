@@ -13,9 +13,10 @@ import lombok.*;
 @Table(name = "jueces")
 @PrimaryKeyJoinColumn(name = "persona_id")
 public class Juez extends Persona{
-    @Column(name = "clave_juzgado", nullable = false, length = 30)
+    
+    @Column(name = "clave_juzgado", nullable = false, length = 30)//aca ponemos como se llama la tabla en sql
     private String claveJuzgado;
-    @Column(nullable = false)
+    @Column(name = "anios_servicio", nullable = false)
     private int antiguedadServicio;
 
     public Juez() {
