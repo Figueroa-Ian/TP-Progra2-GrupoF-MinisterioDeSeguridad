@@ -22,10 +22,6 @@ import jakarta.persistence.InheritanceType;
 @Entity
 @Table(name = "personas") // le decimos que pertenece a esa tabla BDD
 @Inheritance(strategy = InheritanceType.JOINED)
-<<<<<<< HEAD
-
-=======
->>>>>>> cd1e7a49c40530afef49ba00f62c7a291c6133a7
 public class Persona {
 
     @Id
