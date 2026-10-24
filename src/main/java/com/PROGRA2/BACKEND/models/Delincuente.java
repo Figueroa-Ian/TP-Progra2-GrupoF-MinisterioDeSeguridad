@@ -35,4 +35,8 @@ public class Delincuente extends Persona{
     public Delincuente(Integer id, String dni, String nombre, String apellido, String direccion, LocalDate fechaNacimiento) {
         super(id, dni, nombre, apellido, direccion,fechaNacimiento, Rol.DELINCUENTE);
     }
+
+    public void setCodigoBanda(Integer codigoBanda) {
+        this.numeroBanda = codigoBanda;
+    }
 }

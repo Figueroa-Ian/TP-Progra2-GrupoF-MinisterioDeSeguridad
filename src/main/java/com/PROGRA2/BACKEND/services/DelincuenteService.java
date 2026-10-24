@@ -40,4 +40,8 @@ public class DelincuenteService {
         
         return todosLosMiembros;
     }
+    
+    public Delincuente crearDelincuente(Delincuente delincuente){
+        return delincuenteRepository.save(delincuente);
+    }
 }
