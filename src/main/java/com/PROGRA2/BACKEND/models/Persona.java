@@ -1,5 +1,6 @@
 package com.PROGRA2.BACKEND.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -31,6 +32,7 @@ public class Persona {
     private String apellido;
     private String direccion;
     // Nuevo campo: Fecha de Nacimiento
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)//para que pueda tomar la fecha
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
