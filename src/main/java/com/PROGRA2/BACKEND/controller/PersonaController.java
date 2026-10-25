@@ -1,10 +1,8 @@
 package com.PROGRA2.BACKEND.controller;
 
-import com.PROGRA2.BACKEND.models.Delincuente;
 import com.PROGRA2.BACKEND.models.Persona;
 import com.PROGRA2.BACKEND.models.Rol;
 import com.PROGRA2.BACKEND.repository.PersonaRepository;
-import com.PROGRA2.BACKEND.services.DelincuenteService;
 import com.PROGRA2.BACKEND.services.PersonaService;
 import java.time.LocalDate;
 import java.util.List;
@@ -21,18 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 //@CrossOrigin(origins = "*")// Permite que cualquier origen (..localhost:*) consulte a tu API
 public class PersonaController {
+
     private final PersonaRepository personaRepository;
-    
+
     @Autowired
     private final PersonaService personaService = null;
-    private final DelincuenteService delincuenteService;
-    
-    
-    public PersonaController(PersonaRepository personaRepository, DelincuenteService delincuenteService) {
+
+    public PersonaController(PersonaRepository personaRepository) {
         this.personaRepository = personaRepository;
-        this.delincuenteService = delincuenteService;
     }
-    
+
     //toma la ruta que le asignemos
     @GetMapping("/buscar/personas")
     // con RequestParam podemos asignar valores a la URL para poder consultar por un campo 
@@ -52,7 +48,7 @@ public class PersonaController {
         //devuelve todo o devuelve nada
         return personaRepository.findAll();
     }
-    
+
     //Crear a traves de un formulario HTML..
     //Hace un INSERT a la tabla y crea el objeto en la tabla
     // localhost:8080/persona.html 
@@ -71,39 +67,6 @@ public class PersonaController {
     ) {
         Persona persona = new Persona();
         
-        switch (rol) {
-            /*
-            case JUEZ:
-                Juez juez = new Juez();
-                if (aniosAntiguedad != null) {
-                    juez.setAniosAntiguedad(aniosAntiguedad);
-                }
-                persona = juez;
-                break;
-
-            case VIGILANTE:
-                Vigilante vigilante = new Vigilante();
-                if (legajo != null) {
-                    vigilante.setLegajo(legajo);
-                }
-                vigilante.setDisponibilidad(disponibilidad != null ? disponibilidad : false);
-                persona = vigilante;
-                break;
-            */
-            
-            case DELINCUENTE:
-                Delincuente delincuente = new Delincuente();
-                if (codigoBanda != null) {
-                    delincuente.setCodigoBanda(codigoBanda);
-                }
-                delincuenteService.crearDelincuente(delincuente);
-                break;
-                
-            default:
-                System.out.println("Pasó");
-                break;
-        }
-                
         // Datos comunes de Persona
         persona.setDni(dni);
         persona.setNombre(nombre);
@@ -112,10 +75,11 @@ public class PersonaController {
         System.out.println("LA FECHA DE NAC ES: " + fechaNacimiento);
         persona.setFechaNacimiento(fechaNacimiento);
         persona.setRol(rol);
-
-        //return personaRepository.save(persona);
-        return personaService.crearPersona(persona);
+    
+        return personaRepository.save(persona);
+        //return personaService.crearPersona(persona, aniosAntiguedad, codigoBanda, legajo, disponibilidad);
     }
+
     /*
     En lugar de recibir cada parámetro por separado con @RequestParam y llamar a los 
     setters uno por uno, Spring Boot te permite mapear todos los campos del formulario 
@@ -126,7 +90,7 @@ public class PersonaController {
     return personaRepository.save(persona);
     }
      */
-    
+
     @GetMapping("/buscar/persona")
     public ResponseEntity<List<Persona>> buscarPers(@RequestParam(name = "nombre", required = false) String nombre) {
         if (nombre != null && !nombre.trim().isEmpty()) {

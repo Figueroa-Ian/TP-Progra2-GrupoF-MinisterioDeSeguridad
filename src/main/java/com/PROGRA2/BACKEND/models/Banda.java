@@ -4,7 +4,7 @@ package com.PROGRA2.BACKEND.models;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.Getter;
+//import lombok.Getter;
 import lombok.Setter;
 
 //@Getter
@@ -14,7 +14,6 @@ import lombok.Setter;
 
 public class Banda {
     @Id
-    @Column(name = "numero_banda")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer numeroBanda;
     

@@ -11,15 +11,11 @@ public class PersonaService {
 
     @Autowired
     private PersonaRepository pR;
-
+    
     public List<Persona> listarPersonas() {
         System.out.println("Se listan las personas a traves del nuevo metodo Service");
         return pR.findAll();
     }
 
-    public Persona crearPersona(Persona persona){
-        return pR.save(persona);
-    }
-    
     // El service tiene las funciones del CRUD.. falta crear, modif, eliminar..
 }
