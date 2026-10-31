@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -54,5 +55,12 @@ public class DelincuenteController {
     public ResponseEntity<Delincuente> crearDelincuente(@RequestBody Delincuente delincuente) {
         Delincuente nuevoDelincuente = delincuenteService.guardarDelincuente(delincuente);
         return new ResponseEntity<>(nuevoDelincuente, HttpStatus.CREATED);
+    }
+    
+    // PUT http://localhost:8080/api/delincuentes/{id}
+    @PutMapping("/{id}")
+    public ResponseEntity<Delincuente> modificarDelincuente(@PathVariable Integer id, @RequestBody Delincuente delincuenteDetalles) {
+        Delincuente delincuenteActualizado = delincuenteService.modificarDelincuente(id, delincuenteDetalles);
+        return ResponseEntity.ok(delincuenteActualizado);
     }
 }
