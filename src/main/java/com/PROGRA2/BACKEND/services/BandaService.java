@@ -1,36 +1,61 @@
-
 package com.PROGRA2.BACKEND.services;
+
 import com.PROGRA2.BACKEND.models.Banda;
 import com.PROGRA2.BACKEND.repository.BandaRepository;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BandaService {
+public class BandaService implements IBandaService {
 
-    private final BandaRepository bandaRepository;
+    @Autowired
+    private BandaRepository bandaRepository;
 
-    public BandaService(BandaRepository bandaRepository) {
-        this.bandaRepository = bandaRepository;
-    }
-
-    public List<Banda> verBandas() {
+    @Override
+    public List<Banda> traerTodasLosBandas() {
         return bandaRepository.findAll();
     }
-    
-    public Banda verBandaPorId(Integer numeroBanda) {
+
+    @Override
+    public Banda traerBandaPorId(int numeroBanda) {
         return bandaRepository.findById(numeroBanda).orElse(null);
     }
 
-    public List<Banda> buscarPorNombre(String nombre) {
+    @Override
+    public Banda guardarBanda(Banda banda) {
+        return bandaRepository.save(banda);
+    }
+
+    @Override
+    public void eliminarBanda(int id) {
+        bandaRepository.deleteById(id);
+    }
+
+    @Override
+    public Banda modificarBanda(Integer id, Banda bandaModificado) {
+        // 1. Buscamos el banda existente en la base de datos
+        Banda banda = traerBandaPorId(id);
+
+        if (banda != null) {
+            // 2. Actualizamos solo los atributos permitidos
+            banda.setNumeroBanda(bandaModificado.getNumeroBanda());
+
+            // 3. Guardamos los cambios manteniendo el ID original
+            return bandaRepository.save(banda);
+        }
+
+        // Si no se encuentra, retornar null o lanzar una excepción
+        return null;
+    }
+
+    @Override
+    public List<Banda> buscarBandaPorNombre(String nombre) {
         return bandaRepository.findByNombreBandaContainingIgnoreCase(nombre);
     }
 
-    public List<Banda> buscarPorNombreExacto(String nombre) {
+    @Override
+    public List<Banda> buscarBandaPorNombreExacto(String nombre) {
         return bandaRepository.findByNombreBandaIgnoreCase(nombre);
-    }
-    
-    public Banda crearBanda(Banda banda) {
-        return bandaRepository.save(banda);
     }
 }
