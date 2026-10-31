@@ -1,4 +1,3 @@
-
 package com.PROGRA2.BACKEND.services;
 
 import com.PROGRA2.BACKEND.models.Delincuente;
@@ -9,6 +8,7 @@ public interface IDelincuenteService {
     Delincuente traerDelincuentePorId(int id);
     Delincuente guardarDelincuente(Delincuente delincuente);
     void eliminarDelincuente(int id);
-    List<Delincuente> verMiembrosPorNombreBanda(String nombreBanda);
+    Delincuente modificarDelincuente(Integer id, Delincuente delincuente);
     List<Delincuente> verMiembrosPorIdBanda(Integer numeroBanda);
+    List<Delincuente> verMiembrosPorNombreBanda(String nombreBanda);
 }
