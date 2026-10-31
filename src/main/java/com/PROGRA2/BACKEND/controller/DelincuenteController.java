@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-<<<<<<< HEAD
-=======
 import org.springframework.web.bind.annotation.PutMapping;
->>>>>>> 7d4eeadfe723dd55b4e411f118fc0c6e82bcc5e9
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -59,8 +56,6 @@ public class DelincuenteController {
         Delincuente nuevoDelincuente = delincuenteService.guardarDelincuente(delincuente);
         return new ResponseEntity<>(nuevoDelincuente, HttpStatus.CREATED);
     }
-<<<<<<< HEAD
-=======
     
     // PUT http://localhost:8080/api/delincuentes/{id}
     @PutMapping("/{id}")
@@ -68,5 +63,4 @@ public class DelincuenteController {
         Delincuente delincuenteActualizado = delincuenteService.modificarDelincuente(id, delincuenteDetalles);
         return ResponseEntity.ok(delincuenteActualizado);
     }
->>>>>>> 7d4eeadfe723dd55b4e411f118fc0c6e82bcc5e9
 }
