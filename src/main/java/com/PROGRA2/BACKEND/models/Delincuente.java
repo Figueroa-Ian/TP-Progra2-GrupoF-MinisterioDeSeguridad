@@ -20,7 +20,7 @@ import lombok.Setter;
 public class Delincuente extends Persona{
     
     @Column(name = "clave")
-    private String idDelincuente; // Ej: "DEL-001"
+    private String claveDelincuente; // Ej: "DEL-001"
     
     @Column(name = "numero_banda")
     private Integer numeroBanda;
