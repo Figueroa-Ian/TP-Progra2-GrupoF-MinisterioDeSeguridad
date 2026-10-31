@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,11 +36,18 @@ public class JuezController {
     public ResponseEntity<Juez> buscarPorId(@PathVariable Integer id) {
         return ResponseEntity.ok(juezService.traerJuezPorId(id));
     }
-    
+
     // POST http://localhost:8080/api/jueces
-        @PostMapping
-        public ResponseEntity<Juez> crearJuez(@RequestBody Juez juez) {
+    @PostMapping
+    public ResponseEntity<Juez> crearJuez(@RequestBody Juez juez) {
         Juez nuevoJuez = juezService.guardarJuez(juez);
-            return new ResponseEntity<>(nuevoJuez, HttpStatus.CREATED);
-        }
+        return new ResponseEntity<>(nuevoJuez, HttpStatus.CREATED);
+    }
+    
+    // PUT http://localhost:8080/api/jueces/{id}
+    @PutMapping("/{id}")
+    public ResponseEntity<Juez> modificarJuez(@PathVariable Integer id, @RequestBody Juez delincuenteDetalles) {
+        Juez delincuenteActualizado = juezService.modificarJuez(id, delincuenteDetalles);
+        return ResponseEntity.ok(delincuenteActualizado);
+    }
 }

@@ -36,12 +36,19 @@ public class BandaController {
     public Banda verBandaPorId(@PathVariable Integer numeroBanda) {
         return bandaService.traerBandaPorId(numeroBanda);
     }
-    
+
     @PostMapping("/crear/banda")
     public Banda crearBanda(@RequestBody Banda banda) {
         return bandaService.guardarBanda(banda);
     }
-    
+
+    // PUT http://localhost:8080/api/bandas/{id}
+    @PutMapping("/{id}")
+    public ResponseEntity<Banda> modificarBanda(@PathVariable Integer id, @RequestBody Banda delincuenteDetalles) {
+        Banda delincuenteActualizado = bandaService.modificarBanda(id, delincuenteDetalles);
+        return ResponseEntity.ok(delincuenteActualizado);
+    }
+
     // 1. ENDPOINT PARA BÚSQUEDA PARCIAL (Containing)
     @GetMapping("/buscar/bandas/nombreParcial/{nombre}")
     public List<Banda> buscarBandaPorNombre(@PathVariable String nombre) {
@@ -52,12 +59,5 @@ public class BandaController {
     @GetMapping("/buscar/bandas/nombreExacto/{nombre}")
     public List<Banda> buscarBandaPorNombreExacto(@PathVariable String nombre) {
         return bandaService.buscarBandaPorNombreExacto(nombre);
-    }
-
-    // PUT http://localhost:8080/api/bandas/{id}
-    @PutMapping("/{id}")
-    public ResponseEntity<Banda> modificarBanda(@PathVariable Integer id, @RequestBody Banda delincuenteDetalles) {
-        Banda delincuenteActualizado = bandaService.modificarBanda(id, delincuenteDetalles);
-        return ResponseEntity.ok(delincuenteActualizado);
     }
 }
