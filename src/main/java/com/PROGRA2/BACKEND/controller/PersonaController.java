@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-//@CrossOrigin(origins = "*")// Permite que cualquier origen (..localhost:*) consulte a tu API
+@CrossOrigin(origins = "*") // Permite que el frontend consulte la API desde otro puerto/origen.
+
 public class PersonaController {
 
     private final PersonaRepository personaRepository;
@@ -27,6 +29,11 @@ public class PersonaController {
 
     public PersonaController(PersonaRepository personaRepository) {
         this.personaRepository = personaRepository;
+    }
+
+    @GetMapping("/investigadores")
+    public List<Persona> listarInvestigadores() {
+        return personaRepository.findByRol(Rol.INVESTIGADOR);
     }
 
     //toma la ruta que le asignemos
@@ -66,7 +73,7 @@ public class PersonaController {
             @RequestParam(required = false, defaultValue = "false") Boolean disponibilidad
     ) {
         Persona persona = new Persona();
-        
+
         // Datos comunes de Persona
         persona.setDni(dni);
         persona.setNombre(nombre);
@@ -75,7 +82,7 @@ public class PersonaController {
         System.out.println("LA FECHA DE NAC ES: " + fechaNacimiento);
         persona.setFechaNacimiento(fechaNacimiento);
         persona.setRol(rol);
-    
+
         return personaRepository.save(persona);
         //return personaService.crearPersona(persona, aniosAntiguedad, codigoBanda, legajo, disponibilidad);
     }
@@ -90,7 +97,6 @@ public class PersonaController {
     return personaRepository.save(persona);
     }
      */
-
     @GetMapping("/buscar/persona")
     public ResponseEntity<List<Persona>> buscarPers(@RequestParam(name = "nombre", required = false) String nombre) {
         if (nombre != null && !nombre.trim().isEmpty()) {
