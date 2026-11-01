@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PersonaRepository extends JpaRepository<Persona, Integer> {
     
+    boolean existsByDni(String dni);
     //JPA utiliza el nombre del metodo para buscar por el campo de la tabla
     //por lo que es necesario indicarle el nombre del campo
     List<Persona> findByNombre(String nombre);

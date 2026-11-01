@@ -30,10 +30,7 @@ public class PersonaController {
         this.personaRepository = personaRepository;
     }
 
-    @GetMapping("/investigadores")
-    public List<Persona> listarInvestigadores() {
-        return personaRepository.findByRol(Rol.INVESTIGADOR);
-    }
+    // El listado de investigadores ahora lo atiende InvestigadorController (/api/investigadores)
 
     //toma la ruta que le asignemos
     @GetMapping("/buscar/personas")

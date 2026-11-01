@@ -14,9 +14,11 @@ import org.springframework.web.server.ResponseStatusException;
 public class VigilanteService implements IVigilanteService {
 
     private final VigilanteRepository vigilanteRepository;
+    private final PersonaService personaService;
 
-    public VigilanteService(VigilanteRepository vigilanteRepository) {
+    public VigilanteService(VigilanteRepository vigilanteRepository, PersonaService personaService) {
         this.vigilanteRepository = vigilanteRepository;
+        this.personaService = personaService;
     }
 
     @Override
@@ -47,6 +49,7 @@ public class VigilanteService implements IVigilanteService {
     @Override
     @Transactional
     public Vigilante guardarVigilante(Vigilante vigilante) {
+        personaService.validarPersonaNueva(vigilante);   // mayor de 18 años y DNI no repetido
         vigilante.setLegajo(validar(vigilante.getLegajo(), vigilante.getEdad()));
         verificarLegajoLibre(vigilante.getLegajo(), null);
         try {
