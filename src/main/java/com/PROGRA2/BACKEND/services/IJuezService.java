@@ -10,4 +10,5 @@ public interface IJuezService {
     Juez guardarJuez(Juez juez);
     void eliminarJuez(int id);
     Juez modificarJuez(Integer id, Juez juez);
+
 }

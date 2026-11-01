@@ -35,7 +35,7 @@ public class JuezService implements IJuezService {
         juez.setRol(Rol.JUEZ);
         return juezRepository.save(juez);
     }
-    
+
     @Override
     public Juez modificarJuez(Integer id, Juez juezModificado) {
         // 1. Buscamos el juez existente en la base de datos
@@ -52,4 +52,5 @@ public class JuezService implements IJuezService {
         // Si no se encuentra, retornar null o lanzar una excepción
         return null;
     }
+
 }
