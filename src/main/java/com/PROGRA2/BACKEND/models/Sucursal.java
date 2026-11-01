@@ -20,22 +20,22 @@ public class Sucursal {
     @Column(name = "id")
     private Integer id;
     @Column(name = "codigo_entidad")
-    private String codigoEntidad;
+    private String codigo_entidad;
     @Column(name = "numero_empleados")
-    private Integer cantEmpleados;
+    private Integer numero_empleados;
     @Column(name = "direccion")
     private String direccion;
     @Column(name = "es_central")
-    private boolean esCentral;
+    private boolean es_central;
 
     public Sucursal() {
     }
 
-    public Sucursal(Integer codigoSucursal, String codigoEntidad, Integer cantEmpleados, String direccion, boolean esCentral) {
+    public Sucursal(Integer codigoSucursal, String codigo_entidad, Integer numero_empleados, String direccion, boolean es_central) {
         this.id = codigoSucursal;
-        this.codigoEntidad = codigoEntidad;
-        this.cantEmpleados = cantEmpleados;
+        this.codigo_entidad = codigo_entidad;
+        this.numero_empleados = numero_empleados;
         this.direccion = direccion;
-        this.esCentral = esCentral;
+        this.es_central = es_central;
     }
 }

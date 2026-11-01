@@ -41,7 +41,7 @@ public class SucursalService implements ISucursalService {
 
         if (sucursal != null) {
             // 2. Actualizamos solo los atributos permitidos (ejemplo: datos personales y de sucursal)
-            sucursal.setCantEmpleados(sucursalModificado.getCantEmpleados());
+            sucursal.setNumero_empleados(sucursalModificado.getNumero_empleados());
             
             // 3. Guardamos los cambios manteniendo el ID original
             return sucursalRepository.save(sucursal);

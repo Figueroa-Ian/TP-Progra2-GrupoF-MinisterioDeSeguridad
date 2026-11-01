@@ -15,7 +15,7 @@ import lombok.Setter;
 @PrimaryKeyJoinColumn(name = "persona_id") // Se vincula con el id de Persona
 public class Vigilante extends Persona {
 
-    @Column(nullable = false, length = 20)
+    @Column(name = "codigo", nullable = false, length = 20)
     private String legajo;
 
     @Column(nullable = false)
