@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*") // Permite que el frontend consulte la API desde otro puerto/origen.
-
 public class PersonaController {
 
     private final PersonaRepository personaRepository;
