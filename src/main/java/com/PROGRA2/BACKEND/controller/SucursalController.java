@@ -36,7 +36,8 @@ public class SucursalController {
         return sucursalService.traerSucursalPorId(id);
     }
 
-    @PostMapping("/crear/sucursal")
+    // POST http://localhost:8080/api/sucursales
+    @PostMapping
     public Sucursal crearSucursal(@RequestBody Sucursal sucursal) {
         return sucursalService.guardarSucursal(sucursal);
     }
