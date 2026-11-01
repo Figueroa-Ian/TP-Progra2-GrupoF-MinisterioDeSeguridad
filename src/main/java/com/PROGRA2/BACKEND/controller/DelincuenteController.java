@@ -1,54 +1,66 @@
-
 package com.PROGRA2.BACKEND.controller;
 
-import com.PROGRA2.BACKEND.models.Banda;
 import com.PROGRA2.BACKEND.models.Delincuente;
-import com.PROGRA2.BACKEND.repository.BandaRepository;
-import com.PROGRA2.BACKEND.repository.DelincuenteRepository;
-import java.util.ArrayList;
+import com.PROGRA2.BACKEND.services.IDelincuenteService;
 import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RequestMapping("/api/delincuentes")
-
 public class DelincuenteController {
-    
-    private final DelincuenteRepository delincuenteRepository;
-    private final BandaRepository bandaRepository; // Lo inyectamos para poder buscar la banda por nombre e id
-    
-    public DelincuenteController(DelincuenteRepository delincuenteRepository, BandaRepository bandaRepository) {
-        this.delincuenteRepository = delincuenteRepository;
-        this.bandaRepository = bandaRepository;
+
+    private final IDelincuenteService delincuenteService;
+
+    public DelincuenteController(IDelincuenteService delincuenteService) {
+        this.delincuenteService = delincuenteService;
     }
-    
-    @GetMapping("/buscar/delincuentes")
+
+    //GET http://localhost:8080/api/delincuentes
+    @GetMapping
     public List<Delincuente> verDelincuentes() {
-        return delincuenteRepository.findAll();
+        return delincuenteService.traerTodosLosDelincuentes();
     }
-    // 1. Buscar Delincuentes por ID de banda (numeroBanda)
+
+    // GET http://localhost:8080/api/delincuentes/1
+    @GetMapping("/{id}")
+    public ResponseEntity<Delincuente> buscarPorId(@PathVariable Integer id) {
+        return ResponseEntity.ok(delincuenteService.traerDelincuentePorId(id));
+    }
+
+    // POST http://localhost:8080/api/delincuentes
+    @PostMapping
+    public ResponseEntity<Delincuente> crearDelincuente(@RequestBody Delincuente delincuente) {
+        Delincuente nuevoDelincuente = delincuenteService.guardarDelincuente(delincuente);
+        return new ResponseEntity<>(nuevoDelincuente, HttpStatus.CREATED);
+    }
+
+    // PUT http://localhost:8080/api/delincuentes/{id}
+    @PutMapping("/{id}")
+    public ResponseEntity<Delincuente> modificarDelincuente(@PathVariable Integer id, @RequestBody Delincuente delincuenteDetalles) {
+        Delincuente delincuenteActualizado = delincuenteService.modificarDelincuente(id, delincuenteDetalles);
+        return ResponseEntity.ok(delincuenteActualizado);
+    }
+
+    // Buscar Delincuentes por ID de banda (numeroBanda)
     @GetMapping("/buscar/delincuentes/numeroBanda/{numeroBanda}")
     public List<Delincuente> verMiembrosPorIdBanda(@PathVariable Integer numeroBanda) {
-        return delincuenteRepository.findByNumeroBanda(numeroBanda);
+        return delincuenteService.verMiembrosPorIdBanda(numeroBanda);
     }
 
-    // 2. Buscar Delincuentes por Nombre de banda
+    // Buscar Delincuentes por Nombre de banda
     @GetMapping("buscar/delincuentes/nombreBanda/{nombreBanda}")
     public List<Delincuente> verMiembrosPorNombreBanda(@PathVariable String nombreBanda) {
-        // Paso A: Buscamos las bandas que coincidan con el nombre ingresado
-        List<Banda> bandasEncontradas = bandaRepository.findByNombreBandaContainingIgnoreCase(nombreBanda);
-        
-        List<Delincuente> todosLosMiembros = new ArrayList<>();
-        
-        // Paso B: Por cada banda encontrada, traemos sus delincuentes y los acumulamos
-        for (Banda banda : bandasEncontradas) {
-            List<Delincuente> miembrosDeEstaBanda = delincuenteRepository.findByNumeroBanda(banda.getNumeroBanda());
-            todosLosMiembros.addAll(miembrosDeEstaBanda);
-        }
-        
-        return todosLosMiembros;
+        return delincuenteService.verMiembrosPorNombreBanda(nombreBanda);
     }
 }

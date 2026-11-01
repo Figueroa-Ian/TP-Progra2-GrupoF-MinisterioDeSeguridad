@@ -19,16 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 //@CrossOrigin(origins = "*")// Permite que cualquier origen (..localhost:*) consulte a tu API
 public class PersonaController {
+
     private final PersonaRepository personaRepository;
-    
+
     @Autowired
-    private final PersonaService personaS = null;
-    
-    
+    private final PersonaService personaService = null;
+
     public PersonaController(PersonaRepository personaRepository) {
         this.personaRepository = personaRepository;
     }
-    
+
     //toma la ruta que le asignemos
     @GetMapping("/buscar/personas")
     // con RequestParam podemos asignar valores a la URL para poder consultar por un campo 
@@ -48,7 +48,7 @@ public class PersonaController {
         //devuelve todo o devuelve nada
         return personaRepository.findAll();
     }
-    
+
     //Crear a traves de un formulario HTML..
     //Hace un INSERT a la tabla y crea el objeto en la tabla
     // localhost:8080/persona.html 
@@ -65,52 +65,21 @@ public class PersonaController {
             @RequestParam(required = false) Integer legajo,
             @RequestParam(required = false, defaultValue = "false") Boolean disponibilidad
     ) {
-        Persona persona;
-        /*
-        switch (rol) {
-            case JUEZ:
-                Juez juez = new Juez();
-                if (aniosAntiguedad != null) {
-                    juez.setAniosAntiguedad(aniosAntiguedad);
-                }
-                persona = juez;
-                break;
-
-            case DELINCUENTE:
-                Delincuente delincuente = new Delincuente();
-                if (codigoBanda != null) {
-                    delincuente.setCodigoBanda(codigoBanda);
-                }
-                persona = delincuente;
-                break;
-
-            case VIGILANTE:
-                Vigilante vigilante = new Vigilante();
-                if (legajo != null) {
-                    vigilante.setLegajo(legajo);
-                }
-                vigilante.setDisponibilidad(disponibilidad != null ? disponibilidad : false);
-                persona = vigilante;
-                break;
-
-            default:
-        */
-                persona = new Persona();
-                /*
-                break;
-        }*/
-                
+        Persona persona = new Persona();
+        
         // Datos comunes de Persona
         persona.setDni(dni);
         persona.setNombre(nombre);
         persona.setApellido(apellido);
         persona.setDireccion(direccion);
-        System.out.println("LA FECHA DE NAC ES: "+fechaNacimiento);
+        System.out.println("LA FECHA DE NAC ES: " + fechaNacimiento);
         persona.setFechaNacimiento(fechaNacimiento);
         persona.setRol(rol);
-
+    
         return personaRepository.save(persona);
+        //return personaService.crearPersona(persona, aniosAntiguedad, codigoBanda, legajo, disponibilidad);
     }
+
     /*
     En lugar de recibir cada parámetro por separado con @RequestParam y llamar a los 
     setters uno por uno, Spring Boot te permite mapear todos los campos del formulario 
@@ -121,15 +90,14 @@ public class PersonaController {
     return personaRepository.save(persona);
     }
      */
-    
+
     @GetMapping("/buscar/persona")
     public ResponseEntity<List<Persona>> buscarPers(@RequestParam(name = "nombre", required = false) String nombre) {
         if (nombre != null && !nombre.trim().isEmpty()) {
-            return ResponseEntity.ok(personaS.listarPersonas());
+            return ResponseEntity.ok(personaService.listarPersonas());
         }
 
         //devuelve todo o devuelve nada
-        return ResponseEntity.ok(personaS.listarPersonas());
+        return ResponseEntity.ok(personaService.listarPersonas());
     }
 }
-

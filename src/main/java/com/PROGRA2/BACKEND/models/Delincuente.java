@@ -19,9 +19,12 @@ import lombok.Setter;
 @PrimaryKeyJoinColumn(name = "persona_id")
 public class Delincuente extends Persona{
     
+    @Column(name = "clave")
+    private String claveDelincuente; // Ej: "DEL-001"
+    
     @Column(name = "numero_banda")
     private Integer numeroBanda;
-   
+    
     
     public Delincuente() {
         super();
@@ -34,5 +37,9 @@ public class Delincuente extends Persona{
 
     public Delincuente(Integer id, String dni, String nombre, String apellido, String direccion, LocalDate fechaNacimiento) {
         super(id, dni, nombre, apellido, direccion,fechaNacimiento, Rol.DELINCUENTE);
+    }
+
+    public void setCodigoBanda(Integer codigoBanda) {
+        this.numeroBanda = codigoBanda;
     }
 }
