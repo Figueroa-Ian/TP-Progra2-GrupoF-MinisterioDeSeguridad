@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,6 +42,13 @@ public class ContratacionController {
     public ResponseEntity<Contratacion> crearContratacion(@RequestBody Contratacion contratacion) {
         Contratacion nuevaContratacion = contratacionService.guardarContratacion(contratacion);
         return new ResponseEntity<>(nuevaContratacion, HttpStatus.CREATED);
+    }
+    
+    // DELETE http://localhost:8080/api/contrataciones/1   (204 si se eliminó, 404 si no existe)
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<Void> eliminarContratacion(@PathVariable("id") Integer nroContratacion) {
+        contratacionService.eliminarContratacion(nroContratacion);
+        return ResponseEntity.noContent().build();
     }
     
     // PUT http://localhost:8080/api/contrataciones/{id}

@@ -35,17 +35,22 @@ public class ContratacionService implements IContratacionService {
     
     @Override
     public Contratacion modificarContratacion(Integer id, Contratacion contratacionModificado) {
-        // 1. Buscamos el contratacion existente en la base de datos
+        // 1. Buscamos la contratación existente en la base de datos
         Contratacion contratacion = traerContratacionPorId(id);
 
         if (contratacion != null) {
-            // 2. Actualizamos solo los atributos permitidos
-            //contratacion.setConArma(contratacionModificado.getConArma());
+            // 2. Actualizamos todos los atributos permitidos con los nuevos datos
+            contratacion.setCodigoSucursal(contratacionModificado.getCodigoSucursal());
+            contratacion.setCodigoVigilante(contratacionModificado.getCodigoVigilante());
+            contratacion.setFecha(contratacionModificado.getFecha());
+            contratacion.setConArma(contratacionModificado.isConArma());
+            contratacion.setObservaciones(contratacionModificado.getObservaciones());
+
             // 3. Guardamos los cambios manteniendo el ID original
             return contratacionRepository.save(contratacion);
         }
 
-        // Si no se encuentra, retornar null o lanzar una excepciÃ³n
+        // Si no se encuentra, retornar null o lanzar una excepción
         return null;
     }
 }

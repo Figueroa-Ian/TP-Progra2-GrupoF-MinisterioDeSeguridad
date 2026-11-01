@@ -36,18 +36,21 @@ public class SucursalService implements ISucursalService {
 
     @Override
     public Sucursal modificarSucursal(Integer id, Sucursal sucursalModificado) {
-        // 1. Buscamos el sucursal existente en la base de datos
+        // 1. Buscamos la sucursal existente en la base de datos
         Sucursal sucursal = traerSucursalPorId(id);
 
         if (sucursal != null) {
-            // 2. Actualizamos solo los atributos permitidos (ejemplo: datos personales y de sucursal)
+            // 2. Actualizamos todos los atributos de la sucursal
+            sucursal.setCodigo_entidad(sucursalModificado.getCodigo_entidad());
             sucursal.setNumero_empleados(sucursalModificado.getNumero_empleados());
+            sucursal.setDireccion(sucursalModificado.getDireccion());
+            sucursal.setEs_central(sucursalModificado.isEs_central());
             
             // 3. Guardamos los cambios manteniendo el ID original
             return sucursalRepository.save(sucursal);
         }
 
-        // Si no se encuentra, retornar null o lanzar una excepciÃ³n
+        // Si no se encuentra, retornar null o lanzar una excepción
         return null;
     }
 }
