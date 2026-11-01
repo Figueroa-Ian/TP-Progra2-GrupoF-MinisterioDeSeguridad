@@ -32,8 +32,9 @@ public class BandaController {
     }
 
     // GET http://localhost:8080/api/bandas/1
+
     @GetMapping("/{id}")
-    public Banda verBandaPorId(@PathVariable Integer numeroBanda) {
+    public Banda verBandaPorId(@PathVariable("id") Integer numeroBanda) {
         return bandaService.traerBandaPorId(numeroBanda);
     }
 
