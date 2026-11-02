@@ -1,57 +1,41 @@
 package com.PROGRA2.BACKEND.controller;
 
-import com.PROGRA2.BACKEND.models.Persona;
-import com.PROGRA2.BACKEND.models.Usuario;
-import com.PROGRA2.BACKEND.repository.UsuarioRepository;
+import com.PROGRA2.BACKEND.security.UsuarioDetalles;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Optional;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * El login y el logout (POST /api/auth/login y /api/auth/logout) los resuelve Spring Security.
+ * Acá quedan los dos GET que necesita el front.
+ */
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*") // el Front corre en otro puerto (Payara/GlassFish)
 public class LoginController {
 
-    private final UsuarioRepository usuarioRepository;
-
-    public LoginController(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
+    // El front pide el token CSRF antes de cualquier POST/PUT/DELETE y lo manda en el header X-CSRF-TOKEN
+    @GetMapping("/csrf")
+    public Map<String, String> csrf(CsrfToken token) {
+        Map<String, String> r = new LinkedHashMap<>();
+        r.put("headerName", token.getHeaderName());
+        r.put("token", token.getToken());
+        return r;
     }
 
-    // Body: { "mail": "...", "contrasenia": "..." }
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> datos) {
-        String mail = datos.get("mail");
-        String contrasenia = datos.get("contrasenia");
-
-        if (mail == null || contrasenia == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-
-        Optional<Usuario> encontrado = usuarioRepository.findByMail(mail.trim());
-
-        // Las contraseñas están en texto plano en la BDD del TP (ej: 'prog123')
-        if (encontrado.isEmpty() || !encontrado.get().getContrasenia().equals(contrasenia)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-
-        Usuario u = encontrado.get();
-        Persona p = u.getPersona();
-
-        Map<String, Object> respuesta = new LinkedHashMap<>();
-        respuesta.put("id", u.getId());
-        respuesta.put("mail", u.getMail());
-        respuesta.put("personaId", p.getId());
-        respuesta.put("nombre", p.getNombre());
-        respuesta.put("apellido", p.getApellido());
-        respuesta.put("rol", p.getRol().name());
-        return ResponseEntity.ok(respuesta);
+    // Datos del usuario con sesión iniciada (el front lo usa para comprobar que la sesión sigue viva)
+    @GetMapping("/yo")
+    public Map<String, Object> yo(@AuthenticationPrincipal UsuarioDetalles u) {
+        Map<String, Object> r = new LinkedHashMap<>();
+        r.put("id", u.getUsuarioId());
+        r.put("mail", u.getUsername());
+        r.put("personaId", u.getPersonaId());
+        r.put("nombre", u.getNombre());
+        r.put("apellido", u.getApellido());
+        r.put("rol", u.getRol());
+        return r;
     }
 }
