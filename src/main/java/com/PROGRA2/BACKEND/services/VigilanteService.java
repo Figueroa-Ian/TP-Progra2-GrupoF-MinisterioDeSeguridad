@@ -35,13 +35,12 @@ public class VigilanteService implements IVigilanteService {
 
     @Override
     @Transactional
-    public Vigilante crearVigilante(String legajo, int edad, boolean disponibleTrabajar) {
-        String legajoLimpio = validar(legajo, edad);
+    public Vigilante crearVigilante(String legajo, boolean disponibleTrabajar) {
+        String legajoLimpio = validar(legajo);
         verificarLegajoLibre(legajoLimpio, null);
 
         Vigilante vig = new Vigilante();
         vig.setLegajo(legajoLimpio);
-        vig.setEdad(edad);
         vig.setDisponibleTrabajar(disponibleTrabajar);
         return vigilanteRepository.save(vig);   // acá ocurre el INSERT
     }
@@ -50,7 +49,7 @@ public class VigilanteService implements IVigilanteService {
     @Transactional
     public Vigilante guardarVigilante(Vigilante vigilante) {
         personaService.validarPersonaNueva(vigilante);   // mayor de 18 años y DNI no repetido
-        vigilante.setLegajo(validar(vigilante.getLegajo(), vigilante.getEdad()));
+        vigilante.setLegajo(validar(vigilante.getLegajo()));
         verificarLegajoLibre(vigilante.getLegajo(), null);
         try {
             return vigilanteRepository.saveAndFlush(vigilante);   // INSERT de la persona y del vigilante
@@ -65,11 +64,10 @@ public class VigilanteService implements IVigilanteService {
     public Vigilante modificarVigilante(Integer id, Vigilante detalles) {
         Vigilante existente = traerVigilantePorId(id);   // 404 si no existe
 
-        String legajoLimpio = validar(detalles.getLegajo(), detalles.getEdad());
+        String legajoLimpio = validar(detalles.getLegajo());
         verificarLegajoLibre(legajoLimpio, id);
 
         existente.setLegajo(legajoLimpio);
-        existente.setEdad(detalles.getEdad());
         existente.setDisponibleTrabajar(detalles.isDisponibleTrabajar());
         return vigilanteRepository.save(existente);
     }
@@ -90,16 +88,13 @@ public class VigilanteService implements IVigilanteService {
     // ------------------------------------------------------------------
     // Validaciones (devuelven 400 / 409 en vez de un 500 de la base)
     // ------------------------------------------------------------------
-    private String validar(String legajo, int edad) {
+    private String validar(String legajo) {
         if (legajo == null || legajo.trim().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El legajo es obligatorio.");
         }
         String limpio = legajo.trim();
         if (limpio.length() > 20) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El legajo no puede superar los 20 caracteres.");
-        }
-        if (edad <= 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La edad debe ser mayor que cero.");
         }
         return limpio;
     }

@@ -18,17 +18,14 @@ public class Vigilante extends Persona {
     @Column(name = "codigo", nullable = false, length = 20)
     private String legajo;
 
-    @Column(nullable = false)
-    private int edad;    
     private boolean disponibleTrabajar;
     
     public Vigilante() {
     }
 
-    public Vigilante(Integer id, String dni, String nombre, String apellido, String direccion, LocalDate fechaNacimiento, String legajo, int edad, boolean disponibleTrabajar) {
+    public Vigilante(Integer id, String dni, String nombre, String apellido, String direccion, LocalDate fechaNacimiento, String legajo, boolean disponibleTrabajar) {
         super(id, dni, nombre, apellido, direccion, fechaNacimiento, Rol.VIGILANTE);
         this.legajo = legajo;
-        this.edad = edad;
         this.disponibleTrabajar = disponibleTrabajar;
     }
     
@@ -39,20 +36,12 @@ public class Vigilante extends Persona {
         this.legajo = legajo;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
-    }
-
     public void setDisponibleTrabajar(boolean disponibleTrabajar) {
         this.disponibleTrabajar = disponibleTrabajar;
     }
 
     public String getLegajo() {
         return legajo;
-    }
-
-    public int getEdad() {
-        return edad;
     }
 
     public boolean isDisponibleTrabajar() {

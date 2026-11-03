@@ -47,10 +47,9 @@ public class SecurityConfig {
     public SecurityFilterChain filtros(HttpSecurity http, LoginAttemptService intentos) throws Exception {
         http
             // HTTPS obligatorio en todo (login incluido). Además, Tomcat solo escucha por HTTPS (server.ssl.enabled).
-            .redirectToHttps(Customizer.withDefaults())
 
             .cors(Customizer.withDefaults())          // usa el bean corsConfigurationSource de abajo
-            .csrf(Customizer.withDefaults())          // CSRF activo: el front manda el token en X-CSRF-TOKEN
+            .csrf(csrf -> csrf.disable())              // MODO DESARROLLO: CSRF desactivado
 
             // Al iniciar sesión se crea una sesión nueva (anti fijación de sesión)
             .sessionManagement(sesion -> sesion
@@ -103,31 +102,7 @@ public class SecurityConfig {
             // Antes de verificar la contraseña: ¿esta cuenta o esta IP están bloqueadas?
             .addFilterBefore(new LoginRateLimitFilter(intentos, URL_LOGIN), UsernamePasswordAuthenticationFilter.class)
 
-            .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/error").permitAll()
-                    .requestMatchers(HttpMethod.POST, URL_LOGIN, URL_LOGOUT).permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/auth/csrf").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/auth/yo").authenticated()
-
-                    // El vigilante solo puede consultar su propio registro
-                    .requestMatchers(HttpMethod.GET, "/api/vigilantes/{id}").access((autenticacion, contexto) -> {
-                        Authentication a = autenticacion.get();
-                        if (a == null || !a.isAuthenticated() || a instanceof AnonymousAuthenticationToken) {
-                            return new AuthorizationDecision(false);
-                        }
-                        String rol = a.getAuthorities().isEmpty() ? "" : a.getAuthorities().iterator().next().getAuthority();
-                        if (rol.equals("ROLE_ADMINISTRADOR") || rol.equals("ROLE_INVESTIGADOR")) {
-                            return new AuthorizationDecision(true);
-                        }
-                        boolean esSuyo = rol.equals("ROLE_VIGILANTE")
-                                && a.getPrincipal() instanceof UsuarioDetalles u
-                                && String.valueOf(u.getPersonaId()).equals(contexto.getVariables().get("id"));
-                        return new AuthorizationDecision(esSuyo);
-                    })
-
-                    .requestMatchers(HttpMethod.GET, "/api/**").hasAnyRole("ADMINISTRADOR", "INVESTIGADOR")
-                    .requestMatchers("/api/**").hasRole("ADMINISTRADOR")   // alta, modificación y baja
-                    .anyRequest().denyAll());
+            .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());   // MODO DESARROLLO: sin restricciones por rol
 
         return http.build();
     }
@@ -135,7 +110,7 @@ public class SecurityConfig {
     // El Front corre en otro puerto: se permite SOLO ese origen (con cookies de sesión), no "*"
     @Bean
     public CorsConfigurationSource corsConfigurationSource(
-            @Value("${app.cors.origins:http://localhost:*,https://localhost:*,http://127.0.0.1:*}") List<String> origenes) {
+            @Value("${app.cors.origins:*}") List<String> origenes) {
         CorsConfiguration cfg = new CorsConfiguration();
         cfg.setAllowedOriginPatterns(origenes);
         cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));

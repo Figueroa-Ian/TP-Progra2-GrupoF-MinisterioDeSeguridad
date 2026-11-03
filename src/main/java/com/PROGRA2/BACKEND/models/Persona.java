@@ -9,7 +9,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import java.time.LocalDate;
+import java.time.Period;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -41,6 +44,13 @@ public class Persona {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
     private Rol rol;
+
+    // La edad no se guarda: se calcula siempre desde la fecha de nacimiento
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    public Integer getEdad() {
+        return fechaNacimiento == null ? null : Period.between(fechaNacimiento, LocalDate.now()).getYears();
+    }
 
     public Persona() {
     }
