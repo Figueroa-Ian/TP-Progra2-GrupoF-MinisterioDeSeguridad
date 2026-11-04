@@ -44,7 +44,7 @@ public class DelincuenteService implements IDelincuenteService {
 
     @Override
     public Delincuente guardarDelincuente(Delincuente delincuente) {
-        personaService.validarPersonaNueva(delincuente);   // mayor de 18 años y DNI no repetido
+        personaService.validarPersonaNueva(delincuente, PersonaService.EDAD_MINIMA_DELINCUENTE);   // mayor de 14 años y DNI no repetido
         delincuente.setRol(Rol.DELINCUENTE);
         return delincuenteRepository.save(delincuente);
     }
@@ -79,7 +79,7 @@ public class DelincuenteService implements IDelincuenteService {
     public Delincuente modificarDelincuente(Integer id, Delincuente delincuenteModificado) {
         // 1. Buscamos el delincuente existente en la base de datos
         Delincuente delincuente = traerDelincuentePorId(id);
-        personaService.validarFechaNacimiento(delincuenteModificado.getFechaNacimiento());   // sigue siendo mayor de 18
+        personaService.validarFechaNacimiento(delincuenteModificado.getFechaNacimiento(), PersonaService.EDAD_MINIMA_DELINCUENTE);   // sigue siendo mayor de 14
 
         if (delincuente != null) {
             // 2. Actualizamos solo los atributos permitidos (ejemplo: datos personales y de delincuente)

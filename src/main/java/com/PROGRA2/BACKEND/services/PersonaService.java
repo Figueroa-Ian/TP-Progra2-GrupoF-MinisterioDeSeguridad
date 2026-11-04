@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class PersonaService {
 
     public static final int EDAD_MINIMA = 18;
+    public static final int EDAD_MINIMA_DELINCUENTE = 14;   // solo los delincuentes pueden registrarse desde los 14
 
     @Autowired
     private PersonaRepository pR;
@@ -29,17 +30,30 @@ public class PersonaService {
 
     /** Valida fecha de nacimiento (mayor de edad) y DNI (obligatorio y no repetido). */
     public void validarPersonaNueva(Persona persona) {
-        validarFechaNacimiento(persona.getFechaNacimiento());
+        validarPersonaNueva(persona, EDAD_MINIMA);
+    }
+
+    /** Igual que el anterior, pero con una edad mínima propia (ej: delincuentes, 14). */
+    public void validarPersonaNueva(Persona persona, int edadMinima) {
+        validarFechaNacimiento(persona.getFechaNacimiento(), LocalDate.now(), edadMinima);
         validarDniNuevo(persona);
     }
 
     /** Mayor de EDAD_MINIMA años según la fecha de hoy. */
     public void validarFechaNacimiento(LocalDate fechaNacimiento) {
-        validarFechaNacimiento(fechaNacimiento, LocalDate.now());
+        validarFechaNacimiento(fechaNacimiento, LocalDate.now(), EDAD_MINIMA);
+    }
+
+    public void validarFechaNacimiento(LocalDate fechaNacimiento, int edadMinima) {
+        validarFechaNacimiento(fechaNacimiento, LocalDate.now(), edadMinima);
     }
 
     // Se separa "hoy" para poder probarlo con cualquier fecha
     public void validarFechaNacimiento(LocalDate fechaNacimiento, LocalDate hoy) {
+        validarFechaNacimiento(fechaNacimiento, hoy, EDAD_MINIMA);
+    }
+
+    public void validarFechaNacimiento(LocalDate fechaNacimiento, LocalDate hoy, int edadMinima) {
         if (fechaNacimiento == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "La fecha de nacimiento es obligatoria.");
@@ -48,11 +62,11 @@ public class PersonaService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "La fecha de nacimiento no puede ser futura.");
         }
-        // Tiene que ser, como máximo, el mismo día de hace 18 años (nacido ayer, o hace 17 años, no vale)
-        LocalDate fechaLimite = hoy.minusYears(EDAD_MINIMA);
+        // Tiene que ser, como máximo, el mismo día de hace "edadMinima" años
+        LocalDate fechaLimite = hoy.minusYears(edadMinima);
         if (fechaNacimiento.isAfter(fechaLimite)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "La persona debe tener al menos " + EDAD_MINIMA + " años (nacida el " + fechaLimite + " o antes).");
+                    "La persona debe tener al menos " + edadMinima + " años (nacida el " + fechaLimite + " o antes).");
         }
     }
 

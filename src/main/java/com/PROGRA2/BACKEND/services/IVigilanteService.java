@@ -9,7 +9,7 @@ public interface IVigilanteService {
 
     Vigilante traerVigilantePorId(Integer id);
 
-    Vigilante crearVigilante(String legajo, int edad, boolean disponibleTrabajar);
+    Vigilante crearVigilante(String legajo, boolean disponibleTrabajar);
 
     Vigilante guardarVigilante(Vigilante vigilante);
 

@@ -5,5 +5,6 @@ public enum Rol {
     DELINCUENTE,
     JUEZ,
     ADMINISTRADOR,
-    INVESTIGADOR
+    INVESTIGADOR,
+    CHUSMA
 }

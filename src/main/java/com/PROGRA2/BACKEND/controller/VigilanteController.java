@@ -42,22 +42,21 @@ public class VigilanteController {
     // POST http://localhost:8080/api/vigilantes   (201)
     // Body JSON: { "dni": "...", "nombre": "...", "apellido": "...", "direccion": "...",
     //              "fechaNacimiento": "1990-03-15", "rol": "VIGILANTE",
-    //              "legajo": "VIG-06", "edad": 30, "disponibleTrabajar": true }
+    //              "legajo": "VIG-06", "disponibleTrabajar": true }
     @PostMapping
     public ResponseEntity<Vigilante> registrarVigilante(@RequestBody Vigilante vigilante) {
         return new ResponseEntity<>(vigilanteService.guardarVigilante(vigilante), HttpStatus.CREATED);
     }
 
-    // POST http://localhost:8080/api/vigilantes/crear?legajo=VIG-06&edad=30&disponibleTrabajar=true
+    // POST http://localhost:8080/api/vigilantes/crear?legajo=VIG-06&disponibleTrabajar=true
     @PostMapping("/crear")
     public Vigilante crearLVigilanteConParams(@RequestParam String legajo,
-                                              @RequestParam int edad,
                                               @RequestParam boolean disponibleTrabajar) {
-        return vigilanteService.crearVigilante(legajo, edad, disponibleTrabajar);
+        return vigilanteService.crearVigilante(legajo, disponibleTrabajar);
     }
 
     // PUT http://localhost:8080/api/vigilantes/modificar/1
-    // Body JSON: { "legajo": "VIG-01", "edad": 33, "disponibleTrabajar": true }
+    // Body JSON: { "legajo": "VIG-01", "disponibleTrabajar": true }
     @PutMapping("/modificar/{id}")
     public ResponseEntity<Vigilante> modificarVigilante(@PathVariable("id") Integer id,
                                                         @RequestBody Vigilante detalles) {
