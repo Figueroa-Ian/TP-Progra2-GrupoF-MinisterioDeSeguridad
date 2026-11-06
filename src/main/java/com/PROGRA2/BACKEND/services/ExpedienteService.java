@@ -124,7 +124,7 @@ public class ExpedienteService implements IExpedienteService {
         }
         Ilicito existente = ilicitoRepository.findById(id)
                 .orElseThrow(() -> datoInvalido("No existe un ilícito con id " + id + "."));
-        if (recibido.getDescripcion() != null) {
+        if (recibido.getIdDelito() != null || recibido.getDescripcion() != null) {
             return ilicitoService.modificarIlicito(id, recibido);
         }
         return existente;

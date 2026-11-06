@@ -43,10 +43,27 @@ public class DelincuenteService implements IDelincuenteService {
     }
 
     @Override
+    @Transactional
     public Delincuente guardarDelincuente(Delincuente delincuente) {
         personaService.validarPersonaNueva(delincuente, PersonaService.EDAD_MINIMA_DELINCUENTE);   // mayor de 14 años y DNI no repetido
         delincuente.setRol(Rol.DELINCUENTE);
-        return delincuenteRepository.save(delincuente);
+
+        // Si se asigna a una banda: tiene que existir y se suma 1 a su cantidad de miembros
+        Integer numeroBanda = delincuente.getNumeroBanda();
+        Banda banda = null;
+        if (numeroBanda != null && numeroBanda > 0) {
+            banda = bandaRepository.findById(numeroBanda)
+                    .orElseThrow(() -> new ResponseStatusException(
+                            HttpStatus.NOT_FOUND, "No existe una banda con número " + numeroBanda));
+        }
+
+        Delincuente guardado = delincuenteRepository.save(delincuente);
+
+        if (banda != null) {
+            banda.setNumeroMiembros(banda.getNumeroMiembros() + 1);
+            bandaRepository.save(banda);
+        }
+        return guardado;
     }
 
     @Override

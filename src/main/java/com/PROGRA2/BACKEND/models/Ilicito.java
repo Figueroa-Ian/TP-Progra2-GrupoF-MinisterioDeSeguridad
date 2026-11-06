@@ -22,6 +22,11 @@ public class Ilicito {
     @Column(name = "anos_condena", nullable = false)
     private Integer anosCondena;
 
+    // Referencia al delito del catálogo. Los campos siguientes se conservan
+    // para compatibilidad con registros y columnas de versiones anteriores.
+    @Column(name = "id_delito")
+    private Long idDelito;
+
     @Column(name = "id_tipo_juridico")
     private Integer idTipoJuridico;
 
@@ -42,6 +47,9 @@ public class Ilicito {
 
     public Integer getAnosCondena() { return anosCondena; }
     public void setAnosCondena(Integer anosCondena) { this.anosCondena = anosCondena; }
+
+    public Long getIdDelito() { return idDelito; }
+    public void setIdDelito(Long idDelito) { this.idDelito = idDelito; }
 
     public Integer getIdTipoJuridico() { return idTipoJuridico; }
     public void setIdTipoJuridico(Integer idTipoJuridico) { this.idTipoJuridico = idTipoJuridico; }

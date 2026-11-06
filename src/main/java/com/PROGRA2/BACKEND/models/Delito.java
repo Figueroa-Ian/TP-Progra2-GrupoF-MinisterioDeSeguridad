@@ -22,6 +22,15 @@ public class Delito {
     @Column(length = 500)
     private String descripcion;
 
+    @Column(name = "id_tipo_juridico")
+    private Integer idTipoJuridico;
+
+    @Column(name = "id_tipo_accion")
+    private Integer idTipoAccion;
+
+    @Column(name = "id_tipo_intencion")
+    private Integer idTipoIntencion;
+
     public Delito() {}
 
     public Delito(String tipo, String descripcion) {
@@ -38,4 +47,13 @@ public class Delito {
 
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+
+    public Integer getIdTipoJuridico() { return idTipoJuridico; }
+    public void setIdTipoJuridico(Integer idTipoJuridico) { this.idTipoJuridico = idTipoJuridico; }
+
+    public Integer getIdTipoAccion() { return idTipoAccion; }
+    public void setIdTipoAccion(Integer idTipoAccion) { this.idTipoAccion = idTipoAccion; }
+
+    public Integer getIdTipoIntencion() { return idTipoIntencion; }
+    public void setIdTipoIntencion(Integer idTipoIntencion) { this.idTipoIntencion = idTipoIntencion; }
 }

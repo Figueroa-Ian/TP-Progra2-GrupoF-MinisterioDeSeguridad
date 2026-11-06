@@ -1,7 +1,9 @@
 package com.PROGRA2.BACKEND.services;
 
 import com.PROGRA2.BACKEND.models.Ilicito;
+import com.PROGRA2.BACKEND.models.Delito;
 import com.PROGRA2.BACKEND.repository.ExpedienteRepository;
+import com.PROGRA2.BACKEND.repository.DelitoRepository;
 import com.PROGRA2.BACKEND.repository.IlicitoRepository;
 import java.util.List;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,10 +17,13 @@ public class IlicitoService implements IIlicitoService {
 
     private final IlicitoRepository ilicitoRepository;
     private final ExpedienteRepository expedienteRepository;
+    private final DelitoRepository delitoRepository;
 
-    public IlicitoService(IlicitoRepository ilicitoRepository, ExpedienteRepository expedienteRepository) {
+    public IlicitoService(IlicitoRepository ilicitoRepository, ExpedienteRepository expedienteRepository,
+                          DelitoRepository delitoRepository) {
         this.ilicitoRepository = ilicitoRepository;
         this.expedienteRepository = expedienteRepository;
+        this.delitoRepository = delitoRepository;
     }
 
     @Override
@@ -49,6 +54,7 @@ public class IlicitoService implements IIlicitoService {
 
         existente.setDescripcion(detalles.getDescripcion());
         existente.setAnosCondena(detalles.getAnosCondena());
+        existente.setIdDelito(detalles.getIdDelito());
         existente.setIdTipoJuridico(detalles.getIdTipoJuridico());
         existente.setIdTipoAccion(detalles.getIdTipoAccion());
         existente.setIdTipoIntencion(detalles.getIdTipoIntencion());
@@ -72,23 +78,20 @@ public class IlicitoService implements IIlicitoService {
     // Validaciones (devuelven 400 en vez de un 500 de la base)
     // ------------------------------------------------------------------
     private void validar(Ilicito i) {
-        if (i.getDescripcion() == null || i.getDescripcion().trim().isEmpty()) {
-            throw datoInvalido("La descripción es obligatoria.");
-        }
-        i.setDescripcion(i.getDescripcion().trim());
-
         if (i.getAnosCondena() == null || i.getAnosCondena() < 0) {
             throw datoInvalido("Los años de condena son obligatorios y no pueden ser negativos.");
         }
-        if (i.getIdTipoJuridico() == null) {
-            throw datoInvalido("El tipo jurídico es obligatorio.");
+        if (i.getIdDelito() == null) {
+            throw datoInvalido("Elegí un delito del catálogo.");
         }
-        if (i.getIdTipoAccion() == null) {
-            throw datoInvalido("El tipo de acción es obligatorio.");
-        }
-        if (i.getIdTipoIntencion() == null) {
-            throw datoInvalido("El tipo de intención es obligatorio.");
-        }
+
+        Delito delito = delitoRepository.findById(i.getIdDelito())
+                .orElseThrow(() -> datoInvalido("El delito seleccionado no existe."));
+        // Se mantienen los campos históricos sincronizados con el catálogo.
+        i.setDescripcion(delito.getDescripcion());
+        i.setIdTipoJuridico(delito.getIdTipoJuridico());
+        i.setIdTipoAccion(delito.getIdTipoAccion());
+        i.setIdTipoIntencion(delito.getIdTipoIntencion());
     }
 
     // saveAndFlush fuerza el INSERT/UPDATE acá, así la base avisa ya si algún tipo no existe
@@ -96,7 +99,7 @@ public class IlicitoService implements IIlicitoService {
         try {
             return ilicitoRepository.saveAndFlush(i);
         } catch (DataIntegrityViolationException e) {
-            throw datoInvalido("Alguno de los tipos (jurídico, acción o intención) no existe.");
+            throw datoInvalido("El delito o alguno de sus tipos no existe en el catálogo.");
         }
     }
 
